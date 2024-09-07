@@ -26,12 +26,21 @@ completion = client.chat.completions.create(
                 },
             ],
         },
+        {
+            "role": "assistant",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Give a brief description of the colors in the image.",
+                }
+            ],
+        },
     ],
 )
 
-#
-# print(completion)
 
+# print(completion)
+print(completion.choices[0].message.content)
 # Save the entire response
 with open("response.json", "w") as f:
     f.write(completion.json())
