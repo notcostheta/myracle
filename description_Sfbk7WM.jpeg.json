@@ -1,0 +1,49 @@
+{
+    "test_cases": [
+        {
+            "name": "test_enter_source_destination",
+            "description": "Verify user can enter source and destination",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_enter_source_destination(self, app):\n        \"\"\"Verify user can enter source and destination\"\"\"\n        app.enter_source('Mumbai')\n        assert app.get_source_text() == 'Mumbai', 'Source should be Mumbai'\n        app.enter_destination('Pune')\n        assert app.get_destination_text() == 'Pune', 'Destination should be Pune'\n    \n    def test_enter_source_invalid(self, app):\n        \"\"\"Verify invalid source entry\"\"\"\n        app.enter_source('')\n        assert app.get_source_text() == '', 'Source should be empty'\n\n    def test_enter_destination_invalid(self, app):\n        \"\"\"Verify invalid destination entry\"\"\"\n        app.enter_destination('')\n        assert app.get_destination_text() == '', 'Destination should be empty'\n```"
+        },
+        {
+            "name": "test_select_journey_date",
+            "description": "Verify user can select the journey date",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_select_journey_date(self, app):\n        \"\"\"Verify user can select the journey date\"\"\"\n        app.select_journey_date('Sat, 7 Sep')\n        assert app.get_selected_date() == 'Sat, 7 Sep', 'Selected date should be Sat, 7 Sep'\n\n    def test_select_journey_date_invalid(self, app):\n        \"\"\"Verify invalid date selection\"\"\"\n        app.select_journey_date('')\n        assert app.get_selected_date() == '', 'Selected date should be empty'\n```"
+        },
+        {
+            "name": "test_search_button",
+            "description": "Verify search button functionality",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_search_button(self, app):\n        \"\"\"Verify search button functionality\"\"\"\n        app.enter_source('Mumbai')\n        app.enter_destination('Pune')\n        app.select_journey_date('Sat, 7 Sep')\n        app.tap_search_button()\n        assert app.is_bus_list_displayed(), 'Bus list should be displayed after search'\n```"
+        },
+        {
+            "name": "test_cab_bus_hire_navigation",
+            "description": "Verify cab/bus hire functionality",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_cab_bus_hire_navigation(self, app):\n        \"\"\"Verify cab/bus hire functionality\"\"\"\n        app.tap_ryde_option()\n        assert app.is_cab_bus_hire_screen_displayed(), 'Cab/Bus hire screen should be displayed'\n```"
+        },
+        {
+            "name": "test_offers_view_all",
+            "description": "Verify \"View All\" functionality for offers",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_offers_view_all(self, app):\n        \"\"\"Verify \"View All\" functionality for offers\"\"\"\n        app.tap_view_all_offers()\n        assert app.is_all_offers_screen_displayed(), 'All offers screen should be displayed'\n```"
+        },
+        {
+            "name": "test_home_navigation",
+            "description": "Verify navigation to the Home screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_home_navigation(self, app):\n        \"\"\"Verify navigation to the Home screen\"\"\"\n        app.tap_home_button()\n        assert app.is_home_screen_displayed(), 'Home screen should be displayed'\n```"
+        },
+        {
+            "name": "test_my_bookings_navigation",
+            "description": "Verify navigation to the My Bookings screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_my_bookings_navigation(self, app):\n        \"\"\"Verify navigation to the My Bookings screen\"\"\"\n        app.tap_my_bookings_button()\n        assert app.is_my_bookings_screen_displayed(), 'My Bookings screen should be displayed'\n```"
+        },
+        {
+            "name": "test_help_navigation",
+            "description": "Verify navigation to the Help screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_help_navigation(self, app):\n        \"\"\"Verify navigation to the Help screen\"\"\"\n        app.tap_help_button()\n        assert app.is_help_screen_displayed(), 'Help screen should be displayed'\n```"
+        },
+        {
+            "name": "test_my_account_navigation",
+            "description": "Verify navigation to the My Account screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_my_account_navigation(self, app):\n        \"\"\"Verify navigation to the My Account screen\"\"\"\n        app.tap_my_account_button()\n        assert app.is_my_account_screen_displayed(), 'My Account screen should be displayed'\n```"
+        }
+    ]
+}

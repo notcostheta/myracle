@@ -3,6 +3,11 @@ import requests
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+import json
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.DEBUG)
 
 # Load environment variables
 load_dotenv("config.env")
@@ -138,7 +143,21 @@ def generate_description(image_url, user_description):
         ],
     )
 
-    return completion.choices[0].message.content
+    # Extract the JSON content from the response
+    json_content = completion.choices[0].message.content
+
+    # Log the JSON content for debugging
+    logging.debug(f"JSON Content: {json_content}")
+
+    # Strip the triple backticks from the beginning and end of the JSON content
+    json_content = json_content.strip("```json").strip("```")
+
+    # Attempt to parse the JSON content
+    try:
+        return json.loads(json_content)
+    except json.JSONDecodeError as e:
+        logging.error(f"Failed to decode JSON: {e}")
+        return None
 
 
 def gradio_generate_descriptions(image_urls, user_description):
@@ -146,9 +165,14 @@ def gradio_generate_descriptions(image_urls, user_description):
     descriptions = []
     for url in image_urls.split("\n"):
         description = generate_description(url, user_description)
-        descriptions.append(f"**Image URL:** {url}\n**Description:** {description}\n")
+        if description:
+            descriptions.append(description)
 
-    return "\n".join(descriptions)
+            # Write the JSON to a file
+            with open(f"description_{url.split('/')[-1]}.json", "w") as f:
+                json.dump(description, f, indent=4)
+
+    return "\n".join([json.dumps(desc, indent=4) for desc in descriptions])
 
 
 # Create the Gradio interface
