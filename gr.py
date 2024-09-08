@@ -72,13 +72,21 @@ with gr.Blocks() as iface:
     gr.Markdown("# Upload Images to Imgur")
     gr.Markdown("Drag and drop images to add them to the upload list.")
     gr.Markdown("Add Images First, Then Click Upload Images.")
+
+    # Drag-and-drop dialog at the top
+    file_input = gr.File(file_count="multiple", label="Drag and Drop Images Here")
+
+    # Add Images button
     add_images_button = gr.Button("Add Images")
-    upload_button = gr.Button("Upload Images")
+
+    # Status textbox
     output_text = gr.Textbox(label="Upload Status")
 
-    add_images_button.click(
-        gradio_add_images, inputs=gr.File(file_count="multiple"), outputs=output_text
-    )
+    # Upload Images button
+    upload_button = gr.Button("Upload Images")
+
+    # Connect the components to their respective functions
+    add_images_button.click(gradio_add_images, inputs=file_input, outputs=output_text)
     upload_button.click(gradio_upload_images, outputs=output_text)
 
 # Launch the interface
