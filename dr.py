@@ -59,28 +59,42 @@ def gradio_upload_images(files):
     return "\n".join(links)
 
 
-def generate_description(image_url):
+def generate_description(image_url, user_description):
     """Generate a description using the OpenAI API."""
     completion = client.chat.completions.create(
         model="google/gemini-flash-8b-1.5-exp",
         messages=[
             {
+                "role": "system",
+                "content": """
+                You are a QA automation expert tasked with creating Python test scripts for mobile applications based on screenshots. For each screenshot provided:
+                1. Analyze the UI elements, features, and functionality visible.
+                2. Generate a comprehensive set of test cases covering all major functionality.
+                3. Create a Python script using pytest that implements these test cases.
+                Your Python script should:
+                - Use pytest as the testing framework.
+                - Assume the existence of a MobileApp class that represents the app under test.
+                - Include setup and teardown methods as needed.
+                - Implement each test case as a separate test function.
+                - Use descriptive function names prefixed with test_.
+                - Include comments explaining the purpose of each test.
+                - Use assertions to verify expected outcomes.
+                Focus on user interactions, edge cases, and potential error scenarios. Ensure test cases are specific, actionable, and cover both positive and negative testing scenarios.
+                Additionally, the user can describe what they want to test in a prompt box. Use this information to tailor the test cases accordingly.
+                Respond with a Python script containing the test cases for the given screenshot.
+                """,
+            },
+            {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "What is the image about?"},
+                    {
+                        "type": "text",
+                        "text": user_description,
+                    },
                     {
                         "type": "image_url",
                         "image_url": {"url": image_url},
                     },
-                ],
-            },
-            {
-                "role": "assistant",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": "Give a brief description of the colors in the image.",
-                    }
                 ],
             },
         ],
@@ -89,11 +103,11 @@ def generate_description(image_url):
     return completion.choices[0].message.content
 
 
-def gradio_generate_descriptions(image_urls):
+def gradio_generate_descriptions(image_urls, user_description):
     """Gradio interface function to generate descriptions for uploaded images."""
     descriptions = []
     for url in image_urls.split("\n"):
-        description = generate_description(url)
+        description = generate_description(url, user_description)
         descriptions.append(f"**Image URL:** {url}\n**Description:** {description}\n")
 
     return "\n".join(descriptions)
@@ -114,6 +128,9 @@ with gr.Blocks() as iface:
     # Textbox to display uploaded image URLs
     uploaded_urls = gr.Textbox(label="Uploaded Image URLs")
 
+    # Textbox for user to describe what they want to test
+    user_description_input = gr.Textbox(label="Describe what you want to test")
+
     # Generate Descriptions button
     generate_button = gr.Button("Generate Descriptions")
 
@@ -123,7 +140,9 @@ with gr.Blocks() as iface:
     # Connect the components to their respective functions
     upload_button.click(gradio_upload_images, inputs=file_input, outputs=uploaded_urls)
     generate_button.click(
-        gradio_generate_descriptions, inputs=uploaded_urls, outputs=descriptions_output
+        gradio_generate_descriptions,
+        inputs=[uploaded_urls, user_description_input],
+        outputs=descriptions_output,
     )
 
 # Launch the interface
