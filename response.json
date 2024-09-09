@@ -1,1 +1,60 @@
-{"id":"gen-SvohskPe6ifxVqALz61YZtaSpa3K","choices":[{"finish_reason":"STOP","index":0,"logprobs":null,"message":{"content":"The image is primarily composed of **yellow** and **black**.\n\n\n* **Yellow:**  A vibrant, almost golden yellow dominates the background, creating a sense of warmth and energy. It's used for the background, the text \"accepted\", and the number \"S5\".\n* **Black:**  The figure in the hood and some of the text are presented in black. This creates a stark contrast against the yellow and adds a sense of depth and mystery.\n\n\nThe use of these two colors creates a visually striking and somewhat dramatic effect.\n","refusal":"","role":"assistant","function_call":null,"tool_calls":null}}],"created":1725695444,"model":"google/gemini-flash-8b-1.5-exp","object":"chat.completion","service_tier":null,"system_fingerprint":null,"usage":{"completion_tokens":112,"prompt_tokens":280,"total_tokens":392}}
+{
+    "test_cases": [
+        {
+            "name": "test_enter_source_destination",
+            "description": "Verify user can enter source and destination",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_enter_source_destination(self, MobileApp):\n        \"\"\"Verify user can enter source and destination\"\"\"\n        # Enter source\n        MobileApp.enter_source('Mumbai')\n        # Enter destination\n        MobileApp.enter_destination('Pune')\n        assert MobileApp.is_source_entered('Mumbai') and MobileApp.is_destination_entered('Pune'), 'Source and destination should be entered'\n    \n```"
+        },
+        {
+            "name": "test_select_journey_date",
+            "description": "Verify user can select journey date",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_select_journey_date(self, MobileApp):\n        \"\"\"Verify user can select journey date\"\"\"\n        MobileApp.select_journey_date('Sat, 7 Sep')\n        assert MobileApp.is_date_selected('Sat, 7 Sep'), 'Date should be selected'\n    \n```"
+        },
+        {
+            "name": "test_search_button_click",
+            "description": "Verify search button functionality",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_search_button_click(self, MobileApp):\n        \"\"\"Verify search button functionality\"\"\"\n        MobileApp.enter_source('Mumbai')\n        MobileApp.enter_destination('Pune')\n        MobileApp.select_journey_date('Sat, 7 Sep')\n        MobileApp.tap_search_button()\n        assert MobileApp.is_bus_list_displayed(), 'Bus list should be displayed after search'\n    \n```"
+        },
+        {
+            "name": "test_cab_bus_hire_navigation",
+            "description": "Verify cab/bus hire functionality",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_cab_bus_hire_navigation(self, MobileApp):\n        \"\"\"Verify cab/bus hire functionality\"\"\"\n        MobileApp.tap_ryde_option()\n        assert MobileApp.is_cab_bus_hire_screen_displayed(), 'Cab/Bus hire screen should be displayed'\n    \n```"
+        },
+        {
+            "name": "test_offers_view_all",
+            "description": "Verify view all functionality in offers section",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_offers_view_all(self, MobileApp):\n        \"\"\"Verify view all functionality in offers section\"\"\"\n        MobileApp.tap_view_all_offers()\n        assert MobileApp.is_offers_list_displayed(), 'Offers list should be displayed after tapping view all'\n    \n```"
+        },
+        {
+            "name": "test_navigation_home",
+            "description": "Verify navigation to the home screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_navigation_home(self, MobileApp):\n        \"\"\"Verify navigation to the home screen\"\"\"\n        MobileApp.tap_home_button()\n        assert MobileApp.is_home_screen_displayed(), 'Home screen should be displayed'\n    \n```"
+        },
+        {
+            "name": "test_navigation_my_bookings",
+            "description": "Verify navigation to the my bookings screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_navigation_my_bookings(self, MobileApp):\n        \"\"\"Verify navigation to the my bookings screen\"\"\"\n        MobileApp.tap_my_bookings_button()\n        assert MobileApp.is_my_bookings_screen_displayed(), 'My bookings screen should be displayed'\n    \n```"
+        },
+        {
+            "name": "test_navigation_help",
+            "description": "Verify navigation to the help screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_navigation_help(self, MobileApp):\n        \"\"\"Verify navigation to the help screen\"\"\"\n        MobileApp.tap_help_button()\n        assert MobileApp.is_help_screen_displayed(), 'Help screen should be displayed'\n    \n```"
+        },
+        {
+            "name": "test_navigation_my_account",
+            "description": "Verify navigation to the my account screen",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_navigation_my_account(self, MobileApp):\n        \"\"\"Verify navigation to the my account screen\"\"\"\n        MobileApp.tap_my_account_button()\n        assert MobileApp.is_my_account_screen_displayed(), 'My account screen should be displayed'\n    \n```"
+        },
+        {
+            "name": "test_date_selection_today",
+            "description": "Verify date selection functionality with TODAY option",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_date_selection_today(self, MobileApp):\n        \"\"\"Verify date selection functionality with TODAY option\"\"\"\n        MobileApp.tap_date_field()\n        assert MobileApp.is_quick_date_option_visible('TODAY'), 'TODAY option should be visible'\n        MobileApp.select_quick_date_option('TODAY')\n        today_date = MobileApp.get_selected_date()\n        assert today_date == MobileApp.get_current_date(), 'Selected date should be today'\n    \n```"
+        },
+        {
+            "name": "test_date_selection_tomorrow",
+            "description": "Verify date selection functionality with TOMORROW option",
+            "code": "```python\nimport pytest\n\nclass TestBusTickets:\n    \n    def test_date_selection_tomorrow(self, MobileApp):\n        \"\"\"Verify date selection functionality with TOMORROW option\"\"\"\n        MobileApp.tap_date_field()\n        assert MobileApp.is_quick_date_option_visible('TOMORROW'), 'TOMORROW option should be visible'\n        MobileApp.select_quick_date_option('TOMORROW')\n        tomorrow_date = MobileApp.get_selected_date()\n        assert tomorrow_date == MobileApp.get_tomorrow_date(), 'Selected date should be tomorrow'\n    \n```"
+        }
+    ],
+    "image_url": "https://i.imgur.com/Ty9uaej.jpeg"
+}

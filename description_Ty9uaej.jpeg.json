@@ -1,0 +1,49 @@
+{
+    "test_cases": [
+        {
+            "name": "test_enter_source_destination",
+            "description": "Verify user can enter source and destination for bus booking.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_enter_source_destination(self, app):\n        \"\"\"Verify user can enter source and destination for bus booking.\"\"\"\n        app.enter_source('Mumbai')\n        app.enter_destination('Pune')\n        assert app.get_source() == 'Mumbai', 'Source should be Mumbai'\n        assert app.get_destination() == 'Pune', 'Destination should be Pune'\n"
+        },
+        {
+            "name": "test_select_date",
+            "description": "Verify user can select the date for bus booking.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_select_date(self, app):\n        \"\"\"Verify user can select the date for bus booking.\"\"\"\n        app.tap_date_field()\n        assert app.is_quick_date_option_visible('TODAY'), 'TODAY option should be visible'\n        assert app.is_quick_date_option_visible('TOMORROW'), 'TOMORROW option should be visible'\n        app.select_quick_date_option('TODAY')\n        today_date = app.get_selected_date()\n        assert today_date == app.get_current_date(), 'Selected date should be today'\n        app.select_quick_date_option('TOMORROW')\n        tomorrow_date = app.get_selected_date()\n        assert tomorrow_date == app.get_tomorrow_date(), 'Selected date should be tomorrow'\n"
+        },
+        {
+            "name": "test_search_bus_tickets",
+            "description": "Verify user can search for bus tickets.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_search_bus_tickets(self, app):\n        \"\"\"Verify user can search for bus tickets.\"\"\"\n        app.enter_source('Mumbai')\n        app.enter_destination('Pune')\n        app.select_journey_date('Sat, 7 Sep')\n        app.tap_search_button()\n        assert app.is_bus_list_displayed(), 'Bus list should be displayed after search'\n"
+        },
+        {
+            "name": "test_cab_bus_hire_navigation",
+            "description": "Verify user can navigate to cab/bus hire section.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_cab_bus_hire_navigation(self, app):\n        \"\"\"Verify user can navigate to cab/bus hire section.\"\"\"\n        app.tap_ryde_option()\n        assert app.is_cab_bus_hire_screen_displayed(), 'Cab/Bus hire screen should be displayed'\n"
+        },
+        {
+            "name": "test_offers_view_all",
+            "description": "Verify user can view all offers.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_offers_view_all(self, app):\n        \"\"\"Verify user can view all offers.\"\"\"\n        app.tap_view_all_offers()\n        assert app.is_offers_list_displayed(), 'Offers list should be displayed'\n"
+        },
+        {
+            "name": "test_home_navigation",
+            "description": "Verify user can navigate to the home screen.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_home_navigation(self, app):\n        \"\"\"Verify user can navigate to the home screen.\"\"\"\n        app.tap_home_button()\n        assert app.is_home_screen_displayed(), 'Home screen should be displayed'\n"
+        },
+        {
+            "name": "test_my_bookings_navigation",
+            "description": "Verify user can navigate to the my bookings screen.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_my_bookings_navigation(self, app):\n        \"\"\"Verify user can navigate to the my bookings screen.\"\"\"\n        app.tap_my_bookings_button()\n        assert app.is_my_bookings_screen_displayed(), 'My bookings screen should be displayed'\n"
+        },
+        {
+            "name": "test_help_navigation",
+            "description": "Verify user can navigate to the help screen.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_help_navigation(self, app):\n        \"\"\"Verify user can navigate to the help screen.\"\"\"\n        app.tap_help_button()\n        assert app.is_help_screen_displayed(), 'Help screen should be displayed'\n"
+        },
+        {
+            "name": "test_my_account_navigation",
+            "description": "Verify user can navigate to the my account screen.",
+            "code": "```python\nimport pytest\n\nclass TestBusApp:\n    \n    def test_my_account_navigation(self, app):\n        \"\"\"Verify user can navigate to the my account screen.\"\"\"\n        app.tap_my_account_button()\n        assert app.is_my_account_screen_displayed(), 'My account screen should be displayed'\n"
+        }
+    ]
+}

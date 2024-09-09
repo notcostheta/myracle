@@ -154,7 +154,10 @@ def generate_description(image_url, user_description):
 
     # Attempt to parse the JSON content
     try:
-        return json.loads(json_content)
+        content = json.loads(json_content)
+        # content = {"image_url": image_url, **content}
+        return content
+
     except json.JSONDecodeError as e:
         logging.error(f"Failed to decode JSON: {e}")
         return None
