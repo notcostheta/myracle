@@ -1,0 +1,34 @@
+{
+    "test_cases": [
+        {
+            "name": "Test Bus Ticket Search",
+            "description": "Verify the functionality of the bus ticket search feature by entering source and destination and clicking Search button",
+            "code": "def test_bus_ticket_search(mobile_app):\n    # Enter source\n    mobile_app.enter_source(\"Nagpur\")\n    # Enter destination\n    mobile_app.enter_destination(\"Mumbai\")\n    # Click Search button\n    mobile_app.click_search_button()\n    # Verify that the search is successful and the results are displayed\n    assert mobile_app.is_search_successful()\n"
+        },
+        {
+            "name": "Test Source and Destination Selection",
+            "description": "Verify that the app allows selecting source and destination cities/locations",
+            "code": "def test_source_destination_selection(mobile_app):\n    # Verify that source and destination fields are present\n    assert mobile_app.is_source_field_present()\n    assert mobile_app.is_destination_field_present()\n    # Enter source and destination\n    mobile_app.enter_source(\"Nagpur\")\n    mobile_app.enter_destination(\"Mumbai\")\n    # Verify that the entered source and destination are displayed\n    assert mobile_app.get_source_text() == \"Nagpur\"\n    assert mobile_app.get_destination_text() == \"Mumbai\"\n"
+        },
+        {
+            "name": "Test Date Selection",
+            "description": "Verify the functionality of date selection for bus ticket booking",
+            "code": "def test_date_selection(mobile_app):\n    # Verify that date selection is present\n    assert mobile_app.is_date_selection_present()\n    # Select a date\n    mobile_app.select_date(\"Sat, 7 Sep\")\n    # Verify the selected date\n    assert mobile_app.get_selected_date() == \"Sat, 7 Sep\"\n"
+        },
+        {
+            "name": "Test Offers",
+            "description": "Verify the display and functionality of offers related to bus tickets",
+            "code": "def test_offers(mobile_app):\n    # Verify that offers are displayed\n    assert mobile_app.is_offers_displayed()\n    # Verify the offer details\n    assert mobile_app.get_offer_text() == \"Save up to Rs 300 on routes from Nagpur city\"\n    # Verify the offer validity\n    assert mobile_app.get_offer_validity() == \"Valid till: 01 Jan\"\n    # Verify the use code\n    assert mobile_app.get_use_code() == \"NAGPUR300\"\n    # Verify that the 'View All' button is clickable\n    mobile_app.click_view_all_button()\n    assert mobile_app.is_view_all_button_clickable()\n"
+        },
+        {
+            "name": "Test Navigation",
+            "description": "Verify the navigation to different sections of the app",
+            "code": "def test_navigation(mobile_app):\n    # Navigate to Home\n    mobile_app.click_home_button()\n    assert mobile_app.is_home_screen_displayed()\n    # Navigate to My Bookings\n    mobile_app.click_my_bookings_button()\n    assert mobile_app.is_my_bookings_screen_displayed()\n    # Navigate to Help\n    mobile_app.click_help_button()\n    assert mobile_app.is_help_screen_displayed()\n    # Navigate to My Account\n    mobile_app.click_my_account_button()\n    assert mobile_app.is_my_account_screen_displayed()\n"
+        },
+        {
+            "name": "Test Error Handling",
+            "description": "Verify the app's behavior in case of invalid inputs or errors",
+            "code": "def test_error_handling(mobile_app):\n    # Enter invalid source\n    mobile_app.enter_source(\"Invalid Source\")\n    # Verify error message\n    assert mobile_app.is_error_message_displayed()\n    # Enter invalid destination\n    mobile_app.enter_destination(\"Invalid Destination\")\n    # Verify error message\n    assert mobile_app.is_error_message_displayed()\n    # Verify that the app handles invalid dates\n    mobile_app.select_date(\"Invalid Date\")\n    assert mobile_app.is_error_message_displayed()\n"
+        }
+    ]
+}

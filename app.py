@@ -79,7 +79,7 @@ def generate_description(image_url, user_description):
                 2. Generate a comprehensive set of test cases covering all major functionality.
                 3. Create a Python script using pytest that implements these test cases.
 
-                Your response should be a JSON object with the following structure:
+                Your response should strictly be a JSON object with the following structure:
                 {
                 "test_cases": [
                     {
@@ -103,28 +103,6 @@ def generate_description(image_url, user_description):
 
                 Focus on user interactions, edge cases, and potential error scenarios. Ensure test cases are specific, actionable, and cover both positive and negative testing scenarios.
                 </system_prompt>
-
-                <example>
-                {
-                "test_cases": [
-                    {
-                    "name": "test_search_available_buses",
-                    "description": "Verify user can search for available buses",
-                    "code": "```python\ndef test_search_available_buses(self):\n    \"\"\"Verify user can search for available buses\"\"\"\n    self.app.enter_source('Mumbai')\n    self.app.enter_destination('Pune')\n    self.app.select_journey_date('Sat, 7 Sep')\n    self.app.tap_search_button()\n    assert self.app.is_bus_list_displayed(), 'Bus list should be displayed after search'\n```"
-                    },
-                    {
-                    "name": "test_date_selection",
-                    "description": "Verify date selection functionality",
-                    "code": "```python\ndef test_date_selection(self):\n    \"\"\"Verify date selection functionality\"\"\"\n    self.app.tap_date_field()\n    assert self.app.is_quick_date_option_visible('TODAY'), 'TODAY option should be visible'\n    assert self.app.is_quick_date_option_visible('TOMORROW'), 'TOMORROW option should be visible'\n    \n    self.app.select_quick_date_option('TODAY')\n    today_date = self.app.get_selected_date()\n    assert today_date == self.app.get_current_date(), 'Selected date should be today'\n\n    self.app.select_quick_date_option('TOMORROW')\n    tomorrow_date = self.app.get_selected_date()\n    assert tomorrow_date == self.app.get_tomorrow_date(), 'Selected date should be tomorrow'\n```"
-                    },
-                    {
-                    "name": "test_cab_bus_hire_navigation",
-                    "description": "Verify cab/bus hire functionality",
-                    "code": "```python\ndef test_cab_bus_hire_navigation(self):\n    \"\"\"Verify cab/bus hire functionality\"\"\"\n    self.app.tap_ryde_option()\n    assert self.app.is_cab_bus_hire_screen_displayed(), 'Cab/Bus hire screen should be displayed'\n```"
-                    }
-                ]
-                }
-                </example>
                 """,
             },
             {
@@ -154,6 +132,8 @@ def generate_description(image_url, user_description):
 
     # Attempt to parse the JSON content
     try:
+        with open(f"output_{image_url.split('/')[-1]}.json", "w") as f:
+            f.write(json_content)
         content = json.loads(json_content)
         # content = {"image_url": image_url, **content}
         return content
